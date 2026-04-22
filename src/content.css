@@ -1,0 +1,251 @@
+/**
+ * LexAI - Content Styles
+ * Design futurista dark + skeleton loading para feedback instantâneo.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+#lexai-popup {
+  --c-bg:      #080E1A;
+  --c-bg2:     #0C1525;
+  --c-border:  rgba(30,100,200,0.22);
+  --c-blue:    #1E90FF;
+  --c-cyan:    #00BFFF;
+  --c-text:    #E8F0FF;
+  --c-muted:   #7A9BC4;
+  --c-dim:     #3A5878;
+  --c-sk:      rgba(30,100,200,0.1);   /* cor base do skeleton */
+  --c-sk2:     rgba(30,144,255,0.18);  /* cor brilhante do skeleton */
+  --r:         10px;
+  --font:      'Space Grotesk', -apple-system, 'Segoe UI', system-ui, sans-serif;
+  --mono:      'JetBrains Mono', monospace;
+}
+
+#lexai-popup *, #lexai-popup *::before, #lexai-popup *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Container ───────────────────────────────────────────────────────────── */
+#lexai-popup {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  width: 340px;
+  max-width: calc(100vw - 24px);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r);
+  box-shadow:
+    0 8px 40px rgba(0,0,0,.7),
+    0 0 0 1px var(--c-border),
+    0 0 30px rgba(30,144,255,.07);
+  overflow: hidden;
+  isolation: isolate;
+  /* estado inicial — invisível */
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  pointer-events: none;
+  transition: none;
+}
+
+/* Linha topo glowing */
+#lexai-popup::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(30,144,255,.6) 30%,
+    rgba(0,191,255,.9) 50%, rgba(30,144,255,.6) 70%, transparent 100%);
+  z-index: 2;
+}
+
+/* Grid de fundo */
+#lexai-popup::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(30,144,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,144,255,.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none; z-index: 0;
+}
+
+/* Visível */
+#lexai-popup.lexai-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+  transition:
+    opacity .18s cubic-bezier(0.16,1,.3,1),
+    transform .18s cubic-bezier(0.16,1,.3,1);
+}
+
+/* Ocultando */
+#lexai-popup.lexai-hide {
+  opacity: 0;
+  transform: translateY(5px) scale(0.97);
+  pointer-events: none;
+  transition:
+    opacity .15s ease,
+    transform .15s ease;
+}
+
+#lexai-popup.dragging { cursor: grabbing !important; user-select: none; }
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.lexai-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px 10px 14px;
+  background: linear-gradient(180deg, #0C1830 0%, var(--c-bg) 100%);
+  border-bottom: 1px solid var(--c-border);
+  position: relative; z-index: 2;
+}
+.lexai-brand { display: flex; align-items: center; gap: 7px; }
+.lexai-brand-name {
+  font-size: 12px; font-weight: 700; color: var(--c-text);
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.lexai-badge {
+  font-size: 9.5px; font-weight: 600; font-family: var(--mono);
+  color: var(--c-cyan);
+  background: rgba(0,191,255,.1); border: 1px solid rgba(0,191,255,.2);
+  border-radius: 4px; padding: 1px 6px;
+  letter-spacing: .05em; text-transform: uppercase;
+  max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.lexai-hactions { display: flex; gap: 4px; }
+.lexai-ibtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  background: transparent; border: 1px solid transparent;
+  border-radius: 6px; cursor: pointer; color: var(--c-dim);
+  transition: color .13s, background .13s, border-color .13s; padding: 0;
+}
+.lexai-ibtn:hover { color: var(--c-text); background: rgba(30,144,255,.1); border-color: var(--c-border); }
+.lexai-drag-handle { cursor: grab; }
+.lexai-drag-handle:active { cursor: grabbing; }
+
+/* ── Body ────────────────────────────────────────────────────────────────── */
+.lexai-body {
+  position: relative; z-index: 2;
+  max-height: 360px; overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: rgba(30,144,255,.2) transparent;
+}
+.lexai-body::-webkit-scrollbar { width: 3px; }
+.lexai-body::-webkit-scrollbar-thumb { background: rgba(30,144,255,.25); border-radius: 2px; }
+
+/* ── Skeleton ────────────────────────────────────────────────────────────── */
+.lexai-skeleton { padding: 10px 0; }
+
+.sk-section {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(30,100,200,.1);
+}
+.sk-section:last-child { border-bottom: none; }
+
+.sk-label {
+  width: 60px; height: 9px;
+  border-radius: 4px;
+  background: var(--c-sk);
+  margin-bottom: 8px;
+  animation: sk-shimmer 1.4s ease-in-out infinite;
+}
+
+.sk-line {
+  height: 11px; border-radius: 5px;
+  background: var(--c-sk);
+  margin-bottom: 6px;
+  animation: sk-shimmer 1.4s ease-in-out infinite;
+}
+.sk-line:last-child { margin-bottom: 0; }
+.sk-w100 { width: 100%; }
+.sk-w90  { width: 90%;  animation-delay: .1s; }
+.sk-w80  { width: 80%;  animation-delay: .05s; }
+.sk-w60  { width: 60%;  animation-delay: .15s; }
+.sk-w50  { width: 50%;  animation-delay: .2s; }
+
+/* Shimmer: gradiente deslizante simulando brilho */
+@keyframes sk-shimmer {
+  0%   { background: var(--c-sk); }
+  50%  { background: var(--c-sk2); }
+  100% { background: var(--c-sk); }
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────── */
+.lexai-content { display: flex; flex-direction: column; }
+
+.lexai-sec {
+  padding: 11px 16px;
+  border-bottom: 1px solid rgba(30,100,200,.1);
+  opacity: 0; transform: translateY(4px);
+}
+.lexai-sec:last-child { border-bottom: none; }
+.lexai-sec.sec-in {
+  animation: sec-enter .25s cubic-bezier(0.16,1,.3,1) forwards;
+}
+@keyframes sec-enter { to { opacity:1; transform:translateY(0); } }
+
+.lexai-sec-hd {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+}
+.lexai-sec-hd svg  { color: var(--c-blue); flex-shrink: 0; }
+.lexai-sec-hd span {
+  font-size: 9.5px; font-weight: 700; color: var(--c-blue);
+  text-transform: uppercase; letter-spacing: .1em; flex: 1;
+}
+
+.lexai-copy {
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+  background: transparent; border: 1px solid transparent;
+  border-radius: 5px; cursor: pointer; color: var(--c-dim);
+  transition: all .13s; padding: 0; flex-shrink: 0;
+}
+.lexai-copy:hover { color: var(--c-blue); background: rgba(30,144,255,.1); border-color: rgba(30,144,255,.2); }
+.lexai-copy.copied { color: #22C55E; background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.2); }
+
+.lexai-text { font-size: 13px; line-height: 1.55; color: var(--c-text); }
+.lexai-text-main { font-size: 15px; font-weight: 600; color: #EEF4FF; }
+.lexai-text-sm   { font-size: 12px; color: var(--c-muted); line-height: 1.6; }
+
+/* ── Error ───────────────────────────────────────────────────────────────── */
+.lexai-error {
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12.5px; color: #FF7A7A;
+  background: rgba(255,80,80,.05);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.lexai-footer {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 8px 14px;
+  background: rgba(8,14,26,.85);
+  border-top: 1px solid var(--c-border);
+  position: relative; z-index: 2;
+}
+.lexai-preview {
+  font-size: 10.5px; font-family: var(--mono);
+  color: var(--c-dim); flex: 1;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px;
+}
+.lexai-speak {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  background: rgba(30,144,255,.08); border: 1px solid rgba(30,144,255,.2);
+  border-radius: 20px; color: var(--c-blue);
+  font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.lexai-speak:hover {
+  background: rgba(30,144,255,.15); border-color: rgba(30,144,255,.4);
+  box-shadow: 0 0 12px rgba(30,144,255,.15);
+}
+.lexai-speak.speaking {
+  color: var(--c-cyan); background: rgba(0,191,255,.1); border-color: rgba(0,191,255,.35);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(0,191,255,.3); }
+  50%      { box-shadow: 0 0 0 6px rgba(0,191,255,0); }
+}
