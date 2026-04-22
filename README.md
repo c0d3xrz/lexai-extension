@@ -148,6 +148,11 @@ Uso pessoal e educacional.
 Este projeto foi desenvolvido 100% com o auxílio de Inteligência Artificial, desde a ideia até a implementação.
 
 ---
+## 📥 Download
+
+👉 [Baixar última versão do LexAI]([https://github.com/c0d3xrz/lexai-extension/releases/tag/v1.0.0])
+
+---
 
 ## 💬 Feedback
 
