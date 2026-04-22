@@ -145,7 +145,7 @@ Uso pessoal e educacional.
 
 ## 🤖 Sobre o desenvolvimento
 
-Este projeto foi desenvolvido 100% com o auxílio de Inteligência Artificial, desde a ideia até a implementação.
+Este projeto foi desenvolvido 100% com o auxílio de Inteligência Artificial.
 
 ---
 ## 📥 Download
