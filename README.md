@@ -23,7 +23,7 @@ Tudo isso utilizando inteligência artificial via OpenRouter.
 ### 🔧 Pré-requisitos
 
 * Navegador baseado em Chromium (Chrome, Edge, Brave)
-* API Key da Anthropic: https://console.anthropic.com
+* API Key do OpenRouter: https://openrouter.ai/workspaces/default/keys
 
 ---
 
