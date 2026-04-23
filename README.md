@@ -199,7 +199,7 @@ Este projeto foi desenvolvido **100% com o auxílio de Inteligência Artificial*
 
 ## 📥 Download
 
-👉 [Baixar última versão do LexAI](https://github.com/c0d3xrz/lexai-extension/releases/tag/v1.0.0)
+👉 [Baixar última versão do LexAI](https://github.com/c0d3xrz/lexai-extension/releases/tag/v2.0.0)
 
 ---
 
