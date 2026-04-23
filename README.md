@@ -8,41 +8,44 @@
 
 O **LexAI** é uma extensão para navegadores Chromium (Chrome, Edge, Brave) que permite:
 
-* 🌎 Traduzir textos selecionados  
-* 🧠 Entender significados de forma simples  
-* 🔊 Ouvir a pronúncia (TTS)  
-* 📄 Funcionar também em PDFs no navegador  
-* ⚡ Interface rápida, moderna e leve  
+- 🌎 Traduzir textos selecionados
+- 🧠 Entender significados de forma simples
+- 🔊 Ouvir a pronúncia (TTS)
+- 📄 Funcionar também em PDFs no navegador
+- ⚡ Interface rápida, moderna e leve
 
 Tudo isso utilizando inteligência artificial via OpenRouter.
 
 ---
 
-## 🆕 Novidades da versão 2.0
+## 🆕 Novidades da versão 2.1
 
-A versão **v2.0** trouxe uma grande melhoria de estabilidade, especialmente no uso com IA:
+A versão **v2.1** trouxe suporte completo e robusto para diferentes tipos de PDF:
 
-### 🧱 Sistema de fila inteligente
-- Todas as requisições agora são processadas **uma por vez**
-- Evita múltiplas chamadas simultâneas
-- Reduz drasticamente erros de rate limit
+### 📄 Compatibilidade total com PDFs
 
-### 📈 Retry com backoff exponencial
-- Tentativas automáticas em caso de erro
-- Delay inteligente (1s → 2s → 4s → 8s…)
-- Mais compatível com limites de APIs
+#### 1. PDFs remotos (com texto selecionável)
 
-### 🎲 Jitter (anti-congestionamento)
-- Pequena variação aleatória no tempo de retry
-- Evita sobrecarga simultânea nos servidores
+- Funciona em PDFs abertos no viewer nativo do Chrome (PDF.js)
+- Detecta automaticamente a `.textLayer`
+- Funciona igual a qualquer página web
 
-### 🔁 Fallback de modelos otimizado
-- Troca de modelo apenas quando necessário
-- Tentativas múltiplas antes de desistir
+#### 2. PDFs locais (`file://`)
 
-### 💬 Mensagens de erro melhoradas
-- Feedback claro para o usuário
-- Ex: *"⏳ Rate limit atingido. Aguarde alguns segundos."*
+- Adicionado `file:///*` no `host_permissions`
+- Corrigido bloqueio do Chrome em arquivos locais
+- Detecção de PDF local mais confiável
+
+#### 3. PDFs sem seleção (escaneados/protegidos)
+
+Agora há duas formas de usar:
+
+- 🖱️ **Menu de contexto personalizado**
+  - Botão flutuante: **"🔤 Traduzir com LexAI"**
+
+- 📋 **Menu nativo do Chrome**
+  - Opção **"🔤 Traduzir com LexAI"**
+  - Funciona mesmo quando a seleção não vem do PDF.js
 
 ---
 
@@ -50,80 +53,82 @@ A versão **v2.0** trouxe uma grande melhoria de estabilidade, especialmente no 
 
 ### 🔧 Pré-requisitos
 
-* Navegador baseado em Chromium (Chrome, Edge, Brave)
-* API Key do OpenRouter: https://openrouter.ai/workspaces/default/keys
+- Navegador baseado em Chromium (Chrome, Edge, Brave)
+- API Key do OpenRouter: https://openrouter.ai/workspaces/default/keys
 
 ---
 
 ### 📦 Passo a passo
 
 1. **Baixe o projeto**
-
-   * Extraia a pasta `lexai-extension` em um local fixo
+   - Extraia a pasta `lexai-extension`
 
 2. **Abra as extensões**
-
-   * Chrome: `chrome://extensions`  
-   * Edge: `edge://extensions`  
-   * Brave: `brave://extensions`  
+   - Chrome: `chrome://extensions`
+   - Edge: `edge://extensions`
+   - Brave: `brave://extensions`
 
 3. **Ative o modo desenvolvedor**
 
-   * Ative o botão no canto superior direito
-
 4. **Instale a extensão**
+   - Clique em **Carregar sem compactação**
+   - Selecione a pasta do projeto
 
-   * Clique em **Carregar sem compactação**
-   * Selecione a pasta `lexai-extension`
+5. **(IMPORTANTE para PDFs locais)**
+   - Clique no ícone da extensão
+   - Vá em `...`
+   - Ative **"Permitir acesso a URLs de arquivo"**
 
-5. **Configure a API**
-
-   * Clique no ícone da extensão  
-   * Selecione seu Idioma  
-   * Cole sua API Key do OpenRouter  
-   * Salve as configurações  
+6. **Configure a API**
+   - Escolha idioma
+   - Cole sua API Key
+   - Salve
 
 ---
 
 ## 🎯 Como usar
 
-1. Acesse qualquer site ou PDF  
-2. Selecione um texto  
-3. O LexAI exibirá automaticamente:
+1. Acesse qualquer site ou PDF
+2. Selecione um texto
 
-   * Tradução  
-   * Explicação  
-   * Significado  
-   * Botão de áudio  
+O LexAI exibirá:
+
+- Tradução
+- Explicação
+- Significado
+- Botão de áudio
+
+💡 Em PDFs sem seleção, use o botão ou menu **"Traduzir com LexAI"**
 
 ---
 
 ## ⚙️ Funcionalidades
 
-* ✅ Tradução de textos  
-* ✅ Explicação simplificada  
-* ✅ Significado contextual  
-* ✅ Funciona em PDFs  
-* ✅ Cache local (mais rápido)  
-* ✅ Sistema de fila anti-rate-limit  
-* ✅ Retry automático inteligente  
-* ✅ Copiar resultados  
-* ✅ Áudio (Text-to-Speech)  
-* ✅ Interface flutuante com drag  
+- ✅ Tradução de textos
+- ✅ Explicação simplificada
+- ✅ Significado contextual
+- ✅ Suporte completo a PDFs (remoto, local e escaneado)
+- ✅ Cache local
+- ✅ Sistema de fila anti-rate-limit
+- ✅ Retry automático inteligente
+- ✅ Copiar resultados
+- ✅ Áudio (TTS)
+- ✅ Interface flutuante com drag
+- ✅ Menu de contexto integrado
 
 ---
 
 ## 🧠 Como funciona
 
-1. O `content.js` detecta seleção de texto  
-2. Envia requisição para o `background.js`  
-3. O sistema verifica cache local  
-4. As requisições entram em uma **fila inteligente**  
-5. Caso necessário, consulta a API do OpenRouter  
-6. Em caso de erro:
-   - Aplica retry com backoff  
-   - Alterna modelos automaticamente  
-7. Exibe o resultado no popup  
+1. `content.js` detecta seleção
+2. Envia para `background.js`
+3. Verifica cache
+4. Entra na fila inteligente
+5. Consulta OpenRouter
+6. Em erro:
+   - Retry com backoff
+   - Fallback de modelo
+7. Exibe no popup
 
 ---
 
@@ -149,39 +154,39 @@ lexai-extension/
 
 ## 🛠️ Tecnologias
 
-* Manifest V3 (Chrome Extensions)  
-* JavaScript puro  
-* API OpenRouter (OpenAI / Qwen / LLaMA)  
-* Chrome TTS API  
-* chrome.storage (cache local)  
+- Manifest V3
+- JavaScript puro
+- OpenRouter (OpenAI / Qwen)
+- Chrome TTS API
+- chrome.storage
 
 ---
 
 ## 🔐 Privacidade
 
-* ❌ Não coleta dados pessoais  
-* ❌ Não armazena histórico sensível  
-* ✅ Processamento local + API sob controle do usuário  
+- ❌ Não coleta dados pessoais
+- ❌ Não armazena dados sensíveis
+- ✅ Controle total do usuário
 
 ---
 
 ## ⚠️ Limitações
 
-* Modelos gratuitos possuem limite de uso diário  
-* Pode ocorrer atraso em horários de pico  
-* Requer conexão com internet  
+- Limite de uso em modelos gratuitos
+- Possível lentidão em horários de pico
+- Requer internet
 
-💡 Dica: adicionar créditos no OpenRouter melhora muito a estabilidade
+💡 Dica: usar créditos no OpenRouter melhora bastante a estabilidade
 
 ---
 
 ## 🚀 Roadmap
 
-* Tradução automática ao selecionar texto  
-* Suporte a mais idiomas  
-* Melhorias na interface  
-* Publicação na Chrome Web Store  
-* Sistema de planos (free/pro)  
+- Tradução automática ao selecionar
+- Mais idiomas
+- Melhorias de UI
+- Publicação na Chrome Web Store
+- Sistema free/pro
 
 ---
 
@@ -199,10 +204,10 @@ Este projeto foi desenvolvido **100% com o auxílio de Inteligência Artificial*
 
 ## 📥 Download
 
-👉 [Baixar última versão do LexAI](https://github.com/c0d3xrz/lexai-extension/releases/tag/2.0.0)
+👉 https://github.com/c0d3xrz/lexai-extension/releases
 
 ---
 
 ## 💬 Feedback
 
-Sugestões e melhorias são sempre bem-vindas!
+Sugestões e melhorias são bem-vindas 🚀
