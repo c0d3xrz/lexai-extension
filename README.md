@@ -186,7 +186,6 @@ lexai-extension/
 - Mais idiomas
 - Melhorias de UI
 - Publicação na Chrome Web Store
-- Sistema free/pro
 
 ---
 
